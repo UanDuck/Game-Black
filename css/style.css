@@ -1,0 +1,26 @@
+body{
+    margin: 0 auto;
+    background-color: brown;
+
+}
+
+.full{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background-color: brown;
+    margin: 0;
+    color: aliceblue;
+}
+
+.container{
+    
+    background-color: rgb(230, 230, 230);
+    margin: 5vh 55vh;
+    padding: 5vh;
+    width: 30%;
+    border: 2px solid rgb(88, 88, 88);
+    border-radius: 23px;
+}
+

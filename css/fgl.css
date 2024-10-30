@@ -1,0 +1,60 @@
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 94%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+    left: 12px;
+}
+
+label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background: rgb(230, 230, 230);
+    border-radius: 4px;
+    font-size: 12px;
+    color: #999;
+    transition: all 0.3s;
+    padding: 0 5px;
+    pointer-events: none;
+}
+
+input:focus,
+input:not(:placeholder-shown) {
+    border-color: blue;
+}
+
+input:focus+label,
+input:not(:placeholder-shown)+label {
+    top: 0;
+    font-size: 12px;
+    color: blue;
+    transform: translateY(-50%);
+}
+
+.btn-form {
+    display: flex;
+    gap: 15vh;
+}
+
+a {
+    color: black;
+    padding: 2vh;
+    text-decoration: none;
+}
+
+button {
+    padding: 1.8vh;
+    border: 2px solid rgb(126, 126, 126);
+    border-radius: 12px;
+    cursor: pointer;
+}
