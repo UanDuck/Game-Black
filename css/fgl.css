@@ -16,12 +16,12 @@ input {
 
 label {
     position: absolute;
-    top: 50%;
+    top: 53%;
     left: 10px;
     transform: translateY(-50%);
     background: rgb(230, 230, 230);
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 18px;
     color: #999;
     transition: all 0.3s;
     padding: 0 5px;
@@ -36,7 +36,7 @@ input:not(:placeholder-shown) {
 input:focus+label,
 input:not(:placeholder-shown)+label {
     top: 0;
-    font-size: 12px;
+    font-size: 15px;
     color: blue;
     transform: translateY(-50%);
 }

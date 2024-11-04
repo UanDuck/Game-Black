@@ -15,7 +15,7 @@
         <div class="container">
 
             <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-danger" style="color: #c72525;margin-bottom: 11px;font-weight: 550;">
+                <div class="alert alert-danger" style="color: #c72525;margin-bottom: 11px;font-weight: 550; text-align: center;">
                     <?= $_SESSION['error'] ?>
                 </div>
                 <?php unset($_SESSION['error']); ?>
@@ -23,33 +23,37 @@
 
             <form action="registrar.php" method="post">
                 <div class="form-group">
-                    <input type="text" placeholder="Usuario" name="user" maxlength="50" required>
+                    <input type="text" placeholder=" " name="user" maxlength="50" required>
                     <label for="">Username</label>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Nombre" name="nom" maxlength="50" required>
+                    <input type="text" placeholder=" " name="nom" maxlength="50" required>
                     <label for="">Nombre/s</label>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="pa" placeholder="Apellido Paterno" maxlength="50" required>
+                    <input type="text" name="pa" placeholder=" " maxlength="50" required>
                     <label for="">Apellido Paterno</label>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Apellido Materno" name="ma" maxlength="50" required>
+                    <input type="text" placeholder=" " name="ma" maxlength="50" required>
                     <label for="">Apellido Materno</label>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="5512345678" name="telf" minlength="8" maxlength="10" required>
+                    <input type="text" placeholder=" " name="telf" minlength="8" maxlength="10" required>
                     <label for="">Telefono </label>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" name="email" placeholder="ejemplo@gmail.com" id="email" maxlength="100" required>
-                    <label for="email">Email</label>
+                    <input type="text" name="email" placeholder="@g  . " id="email" maxlength="100" required>
+                    <label for="email">Correo</label>
                 </div>
                 <div class="form-group">
-                    <input type="password" placeholder="8 Min.  20 Max." name="contra" id="password" required minlength="8" maxlength="20">
+                    <input type="password" placeholder="8 - 20" name="contrasena" id="contrasena" required minlength="8" maxlength="20">
                     <label for="password">Contraseña</label>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder=" " name="confirmar_contra" id="confirmar_contra" required minlength="8" maxlength="20">
+                    <label for="password">Confirmar Contraseña</label>
                 </div>
 
                 <div class="btn-form">
@@ -59,6 +63,7 @@
             </form>
         </div>
     </div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

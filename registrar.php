@@ -9,7 +9,7 @@ $ap = $_POST['pa'];
 $am = $_POST['ma'];
 $telf = $_POST['telf'];
 $correo = $_POST['email'];
-$contra = $_POST['contra'];
+$contra = $_POST['confirmar_contra'];
 
 
 
