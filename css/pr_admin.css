@@ -1,0 +1,28 @@
+body {
+    margin: 0 auto;
+    background-color: rgb(94, 21, 21);
+}
+
+.full { 
+    /* justify-content: center; */
+    /* align-items: center; */
+    background-color: rgb(109, 26, 26);
+    /* margin: 0; */
+    color: aliceblue;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.producto {
+    padding: 2em;
+    background: gold;
+    max-width: 200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 3fr));
+    margin: 1rem;
+}
