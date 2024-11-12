@@ -7,7 +7,7 @@ $fecha = $_POST['flanz'];
 $clasif = $_POST['clasifica'];
 $gen = $_POST['genero'];
 $prec = $_POST['precio'];
-$tp = "imagenes/juegos";
+$tp = "imagenes/juegos/";
 $tp = $tp . basename($_FILES['uploaderfile']['name']);
 
 
