@@ -24,7 +24,7 @@
             while ($reg = mysqli_fetch_array($registros)) {
                 $id_v = $reg['id_v'];
                 echo '<div class="producto">';
-                echo '<img src=' . $reg['imagen'] . ' >';
+                echo '<img src=' . $reg['imagen'] . ' style="width: 200px;" >';
                 echo '<h2> ' . $reg['nom_v'] . ' </h2>';
                 echo '<p> ' . $reg['desc_v'] . ' </p>';
                 echo '<p> ' . $reg['fecha_lanz'] . ' </p>';

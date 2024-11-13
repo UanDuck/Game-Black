@@ -32,7 +32,7 @@ if (!preg_match('/^[a-zA-Z0-9]+$/', $contra)) {
     exit;
 }
 
-$consulta_existe = "SELECT * FROM registro WHERE email=?";
+$consulta_existe = "SELECT * FROM usuario WHERE correo_u=?";
 $pre = mysqli_prepare($conexion, $consulta_existe);
 mysqli_stmt_bind_param($pre, "s", $correo);
 mysqli_stmt_execute($pre);
@@ -41,7 +41,7 @@ $existe = mysqli_num_rows($resultado_existe);
 
 $encript_contra = password_hash($contra, PASSWORD_BCRYPT);
 
-$sql = "INSERT INTO registro (username, nombre, ap_p, ap_m, email, pass, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO usuario (usuario, nom_u, ap_u, am_u, correo_u, contrasenia_u, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $pre = mysqli_prepare($conexion, $sql);
 mysqli_stmt_bind_param($pre, "sssssss", $usern, $nombr, $ap, $am, $correo, $encript_contra, $telf);
 mysqli_stmt_execute($pre);
