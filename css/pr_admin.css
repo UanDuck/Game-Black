@@ -1,12 +1,12 @@
 body {
     margin: 0 auto;
-    background-color: rgb(94, 21, 21);
+    background-color: #232323;
 }
 
 .full { 
     /* justify-content: center; */
     /* align-items: center; */
-    background-color: rgb(109, 26, 26);
+    background-color: #232323;
     /* margin: 0; */
     color: aliceblue;
     text-align: center;

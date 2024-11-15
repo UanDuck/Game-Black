@@ -1,5 +1,5 @@
 <?php
-include('conector.php');
+include('php/conec.php');
 if ($conexion->connect_error) {
     die('Hmmmmm esta mal edit_producto' . $conexion->connect_error);
 }
