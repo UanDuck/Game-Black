@@ -9,7 +9,7 @@ $total = $reg['ct']; // guarda el total de registros contados en la variable $to
 $limit = 1; // limita de productos a mostrar
 $paginas = ceil($total / $limit);  // ceil para redondear hacia arriba
 
-echo '<div class="paginacion">';
+echo '<div class="paginacion" style="position: fixed;" >';
 
 for ($i = 1; $i <= $paginas; $i++) {
     if ($i == $pagina_actual) {

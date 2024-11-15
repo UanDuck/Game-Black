@@ -1,7 +1,6 @@
 .paginacion {
-    position: absolute;
+    position: fixed;
     bottom: 3vh;
-
 }
 
 .a:hover,
@@ -31,6 +30,9 @@ span {
 span {
     text-decoration: underline;
     font-weight: 700;
-    background: #eb9800;
 
+}
+
+.EE{
+    display: flex; flex-wrap: wrap; flex-direction: row; align-items: center; justify-content: center; gap: 5vh;
 }
