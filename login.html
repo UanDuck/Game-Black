@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión Gamer</title>
+    <link rel="icon" href="logo-modified.png" type="image/png"> 
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- Imagen a la izquierda -->
+        <div class="image-side">
+            <img src="fondo1.jpg" alt="Fondo" class="background-image">
+        </div>
+
+        
+        <div class="form-side">
+            <div class="container">
+                <h2>INICIO DE SESIÓN</h2>
+                <form action="login.php" method="post" onsubmit="return validarFormulario()">
+                    <div class="input-container">
+                        <input type="text" name="usuario" id="usuario" required placeholder=" ">
+                        <label for="usuario">USUARIO:</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="password" name="contrasenia_u" id="contrasenia_u" required placeholder=" " minlength="8" maxlength="20">
+                        <label for="contrasenia_u">CONTRASEÑA:</label>
+                    </div>
+                    <input type="submit" value="INICIAR SESIÓN">
+                    <br><br>
+                    <a href="#" class="create-account-link">Crear cuenta</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validarFormulario() {
+            const username = document.getElementById("uasuario").value;
+            const contraseña = document.getElementById("contrasenia_u").value;
+
+            if (username === "" || contraseña === "") {
+                alert("Por favor, complete todos los campos.");
+                return false;
+            }
+
+            return true; // Permite el envío del formulario si todas las vcondiciones se cumplen
+        }
+    </script>
+</body>
+</html>

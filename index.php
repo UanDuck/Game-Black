@@ -1,6 +1,6 @@
 <?php
 
-header('location: inicio.php');
+header('location: login.html');
 
 
 
