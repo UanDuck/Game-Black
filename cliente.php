@@ -19,20 +19,41 @@ $result_count = $conn->query($consulta_count);
 $total = mysqli_fetch_assoc($result_count)['ct'];
 $paginas = ceil($total / $limit); // Total de páginas necesarias
 
-// pproductos para la página actual
+
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$gen = isset($_GET['gene']) ? $_GET['gene'] : '';      //obtenemos lo que hay en el formulario de busqueda
+$clasi = isset($_GET['clas']) ? $_GET['clas'] : '';
 
 
+$where = [];  // creamos un array...
 
-if ($search) { //si hay $search
-    $consulta_count = "SELECT COUNT(*) as ct FROM videojuegos WHERE nom_v LIKE '%$search%' OR desc_v LIKE '%$search%'"; //buscar por....
-    $consulta = "SELECT id_v, nom_v, desc_v, fecha_lanz, clasif_v, genero_v, precio, imagen FROM videojuegos WHERE nom_v LIKE '%$search%' OR desc_v LIKE '%$search%' LIMIT $inicio, $limit";
-} else { // sino, consulta todos los videojuegos
+if ($search) { //si se busca por palabra...
+    $where[] = "(nom_v LIKE '%$search%' OR desc_v LIKE '%$search%')";  //guardamos en el array where con su debida consulta
+}
+
+if ($gen) { //si se busca por genero
+    $where[] = "genero_v = '$gen'";  //guardamos en el array where cuando genero_v = 'loquehayabuscadoelusuario'
+}
+
+if ($clasi) {
+    $where[] = "clasif_v = '$clasi'";
+}
+
+$vwhere = count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '';
+
+
+if ($search || $search && $gen || $search && $clasi && $gen || $search && $clasi) { //si hay busqueda no se mostrara paguinacion
+    $consulta_count = "SELECT COUNT(*) as ct FROM videojuegos $vwhere";
+    $consulta = "SELECT id_v, nom_v, desc_v, fecha_lanz, clasif_v, genero_v, precio, imagen FROM videojuegos $vwhere";
+} else { //sino se mostrata áginacion
     $consulta_count = "SELECT COUNT(*) as ct FROM videojuegos";
     $consulta = "SELECT id_v, nom_v, desc_v, fecha_lanz, clasif_v, genero_v, precio, imagen FROM videojuegos LIMIT $inicio, $limit";
 }
+
 $result = $conn->query($consulta);
 
+$generos = $conn->query("SELECT genero_v FROM videojuegos GROUP BY genero_v")->fetch_all(MYSQLI_ASSOC); //obtenemos los generos de la base de datos 
+$clasi = $conn->query("SELECT clasif_v FROM videojuegos GROUP BY clasif_v")->fetch_all(MYSQLI_ASSOC);  //obtenemos las clasificaciones de la base de datos 
 
 
 //agg productos al carrito
@@ -175,11 +196,29 @@ function getCarritoCount()
         <div class="cart-icon" onclick="toggleCart()">
             <img src="carrito.jpg" alt=""> <span id="cart-count">0</span>
         </div>
+
+
         <form method="GET">
-            <input type="text" name="search" placeholder="Buscar"
-                value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+            <input type="text" name="search" placeholder="Buscar" value="<?php echo $search; ?>">
+            <select name="gene">
+                <option value="">Selecciona Género</option>
+                <?php foreach ($generos as $genero): ?>
+                    <option value="<?php echo $genero['genero_v']; ?>" <?php echo $gen == $genero['genero_v'] ? 'selected' : ''; ?>>
+                        <?php echo $genero['genero_v']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <select name="clas">
+                <option value="">Selecciona Clasificación</option>
+                <?php foreach ($clasi as $clas): ?>
+                    <option value="<?php echo $clas['clasif_v']; ?>" <?php echo $clasi == $clas['clasif_v'] ? 'selected' : ''; ?>>
+                        <?php echo $clas['clasif_v']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             <input type="submit" value="Buscar">
         </form>
+
         <h1>BLACK-GAMES</h1>
     </header>
 
@@ -196,6 +235,8 @@ function getCarritoCount()
 
                     <p>Descripción: <?php echo htmlspecialchars($product['desc_v']); ?></p>
                     <p><strong>Precio:</strong> $<?php echo number_format($product['precio'], 2); ?></p>
+                    <p><strong>Género:</strong> <?php echo htmlspecialchars($product['genero_v']); ?></p>
+                    <p><strong>Clasificación:</strong> <?php echo htmlspecialchars($product['clasif_v']); ?></p>
 
                     <!-- Formulario para agregar al carrito -->
                     <form method="POST">
@@ -269,11 +310,6 @@ function getCarritoCount()
 
 
 
-
-
-
-
-
     <script>
         function toggleCart() {
             const cartSidebar = document.getElementById("cart-sidebar");
@@ -281,11 +317,9 @@ function getCarritoCount()
             cartSidebar.classList.toggle("hidden");
         }
     </script>
-
 </body>
 
 </html>
-
 <?php
 $conn->close(); // Cerrarconexión con gb
 ?>
