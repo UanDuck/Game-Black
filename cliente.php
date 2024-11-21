@@ -25,14 +25,14 @@ $gen = isset($_GET['gene']) ? $_GET['gene'] : '';      //obtenemos lo que hay en
 $clasi = isset($_GET['clas']) ? $_GET['clas'] : '';
 
 
-$where = [];  // creamos un array...
+$where = []; // Creamos un array...
 
-if ($search) { //si se busca por palabra...
-    $where[] = "(nom_v LIKE '%$search%' OR desc_v LIKE '%$search%')";  //guardamos en el array where con su debida consulta
+if ($search) { // Si se busca por palabra...
+    $where[] = "(nom_v LIKE '%$search%' OR desc_v LIKE '%$search%')"; // Guardamos en el array where con su debida consulta
 }
 
-if ($gen) { //si se busca por genero
-    $where[] = "genero_v = '$gen'";  //guardamos en el array where cuando genero_v = 'loquehayabuscadoelusuario'
+if ($gen) { // Si se busca por género
+    $where[] = "genero_v = '$gen'"; // Guardamos en el array where cuando genero_v = 'loquehayabuscadoelusuario'
 }
 
 if ($clasi) {
@@ -41,20 +41,30 @@ if ($clasi) {
 
 $vwhere = count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '';
 
+$consulta_count = "SELECT COUNT(*) as ct FROM videojuegos $vwhere";
+$result_count = $conn->query($consulta_count);
+$total = mysqli_fetch_assoc($result_count)['ct'];
 
-if ($search || $search && $gen || $search && $clasi && $gen || $search && $clasi) { //si hay busqueda no se mostrara paguinacion
-    $consulta_count = "SELECT COUNT(*) as ct FROM videojuegos $vwhere";
+// Total de páginas necesarias
+$paginas = ceil($total / $limit);
+
+if ($search) {
+    //si hay busqueda no aplicamos un cierto limite de productos
     $consulta = "SELECT id_v, nom_v, desc_v, fecha_lanz, clasif_v, genero_v, precio, imagen FROM videojuegos $vwhere";
-} else { //sino se mostrata áginacion
-    $consulta_count = "SELECT COUNT(*) as ct FROM videojuegos";
-    $consulta = "SELECT id_v, nom_v, desc_v, fecha_lanz, clasif_v, genero_v, precio, imagen FROM videojuegos LIMIT $inicio, $limit";
+} else {
+    //sino hay búsqueda aplicamos un limite de ´productos
+    $consulta = "SELECT id_v, nom_v, desc_v, fecha_lanz, clasif_v, genero_v, precio, imagen FROM videojuegos $vwhere LIMIT $inicio, $limit";
 }
 
 $result = $conn->query($consulta);
 
+$generos = $conn->query("SELECT genero_v FROM videojuegos GROUP BY genero_v")->fetch_all(MYSQLI_ASSOC); // Obtenemos los géneros de la base de datos 
+$clasi = $conn->query("SELECT clasif_v FROM videojuegos GROUP BY clasif_v")->fetch_all(MYSQLI_ASSOC);  // Obtenemos las clasificaciones de la base de datos 
+
+
+
 $generos = $conn->query("SELECT genero_v FROM videojuegos GROUP BY genero_v")->fetch_all(MYSQLI_ASSOC); //obtenemos los generos de la base de datos 
 $clasi = $conn->query("SELECT clasif_v FROM videojuegos GROUP BY clasif_v")->fetch_all(MYSQLI_ASSOC);  //obtenemos las clasificaciones de la base de datos 
-
 
 //agg productos al carrito
 if (isset($_POST['add_to_cart'])) {
@@ -124,6 +134,7 @@ function getCarritoCount()
         }
 
         main {
+            font-family: "Roboto", sans-serif;
             padding: 20px;
         }
 
@@ -160,7 +171,7 @@ function getCarritoCount()
             font-weight: bold;
         }
 
-        #cart-sidebar {
+    #cart-sidebar {
             position: fixed;
             top: 0;
             right: 0;
@@ -188,51 +199,53 @@ function getCarritoCount()
             margin: 10px 0;
         }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Port+Lligat+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
     <header>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="carrito.jpg" alt=""> <span id="cart-count">0</span>
         </div>
-
-
         <form method="GET">
-            <input type="text" name="search" placeholder="Buscar" value="<?php echo $search; ?>">
+            <input type="text" name="search" placeholder="Buscar" value="<?php echo htmlspecialchars($search); ?>">
             <select name="gene">
                 <option value="">Selecciona Género</option>
                 <?php foreach ($generos as $genero): ?>
-                    <option value="<?php echo $genero['genero_v']; ?>" <?php echo $gen == $genero['genero_v'] ? 'selected' : ''; ?>>
-                        <?php echo $genero['genero_v']; ?>
+                    <option value="<?php echo htmlspecialchars($genero['genero_v']); ?>" <?php echo $gen == $genero['genero_v'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($genero['genero_v']); ?>
                     </option>
                 <?php endforeach; ?>
             </select>
             <select name="clas">
                 <option value="">Selecciona Clasificación</option>
                 <?php foreach ($clasi as $clas): ?>
-                    <option value="<?php echo $clas['clasif_v']; ?>" <?php echo $clasi == $clas['clasif_v'] ? 'selected' : ''; ?>>
-                        <?php echo $clas['clasif_v']; ?>
+                    <option value="<?php echo htmlspecialchars($clas['clasif_v']); ?>" <?php echo $clasi == $clas['clasif_v'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($clas['clasif_v']); ?>
                     </option>
                 <?php endforeach; ?>
             </select>
             <input type="submit" value="Buscar">
         </form>
 
-        <h1>BLACK-GAMES</h1>
+        <a href="cliente.php" style="all: unset;">
+            <h1 style="cursor: pointer; font-family: 'Doto', sans-serif; font-size: xxx-large;" >BLACK-GAMES</h1>
+        </a>
     </header>
 
     <main>
         <div id="product-list">
             <?php while ($product = mysqli_fetch_assoc($result)): ?>
                 <div class="product">
-
                     <img src="<?php echo htmlspecialchars($product['imagen']); ?>"
                         alt="<?php echo htmlspecialchars($product['nom_v']); ?>"
                         style="width: 150px; height: auto; margin-bottom: 10px;">
-
                     <h3><?php echo htmlspecialchars($product['nom_v']); ?></h3>
-
                     <p>Descripción: <?php echo htmlspecialchars($product['desc_v']); ?></p>
                     <p><strong>Precio:</strong> $<?php echo number_format($product['precio'], 2); ?></p>
                     <p><strong>Género:</strong> <?php echo htmlspecialchars($product['genero_v']); ?></p>
@@ -246,14 +259,16 @@ function getCarritoCount()
                 </div>
             <?php endwhile; ?>
         </div>
-        <!-- Paginacion de new -->
-        <div class="pagination"
-            style=" display: flex; align-items: center; flex-direction: row; justify-content: center; ">
-            <?php for ($i = 1; $i <= $paginas; $i++): ?>
-                <a href="?pagina=<?php echo $i; ?>"><button
-                        class="<?php echo $i == $pagina_actual ? 'active' : ''; ?>"><?php echo $i; ?></button></a>
-            <?php endfor; ?>
-        </div>
+
+        <?php if (!$search): //si no hay busqueda mostar paginacion ?>
+            <div class="pagination"
+                style="display: flex; align-items: center; flex-direction: row; justify-content: center;">
+                <?php for ($i = 1; $i <= $paginas; $i++): ?>
+                    <a href="?pagina=<?php echo $i; ?>"><button
+                            class="<?php echo $i == $pagina_actual ? 'active' : ''; ?>"><?php echo $i; ?></button></a>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
     </main>
 
     <!-- Carrooooooooo -->
