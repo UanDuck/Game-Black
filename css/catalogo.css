@@ -1,0 +1,132 @@
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #000000;
+    color: white;
+    padding: 10px 20px;
+}
+
+.cart-icon {
+    cursor: pointer;
+    position: relative;
+}
+
+#cart-count {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+}
+
+main {
+    font-family: "Roboto", sans-serif;
+    padding: 20px;
+}
+
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.product {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+button {
+    background: #050047;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #050047;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    font-weight: bold;
+}
+
+#cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+#cart-sidebar.visible {
+    transform: translateX(0);
+}
+
+#cart-sidebar.hidden {
+    transform: translateX(100%);
+}
+
+#cart-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.busq{
+    width: 30%;
+}
+
+.busq > form > label, select, input{
+    margin-top: 1.4vh;
+    border: none;
+    border-radius: 18px;
+    padding: 5px;
+    text-align: center;
+    background: #282828;
+    font-size: 2.5vh;
+}
+
+#serch{
+    width: 81%;
+    border: none;
+    color: whitesmoke;
+}
+
+#bot{
+    width: 12%;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.sel{
+    max-width: 100%;
+}
+
+#gen{
+    width: 46%;
+    background: #282828;
+    color: whitesmoke;
+}
+
+#clas{
+    width: 49%;
+    background: #282828;
+    color: whitesmoke;
+}
