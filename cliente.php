@@ -108,103 +108,19 @@ function getCarritoCount()
     <title>THE BLACK-GAMES</title>
     <link rel="stylesheet" href="css/num_pg.css">
     <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #000000;
-            color: white;
-            padding: 10px 20px;
-        }
 
-        .cart-icon {
-            cursor: pointer;
-            position: relative;
-        }
-
-        #cart-count {
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-            position: absolute;
-            top: -5px;
-            right: -10px;
-        }
-
-        main {
-            font-family: "Roboto", sans-serif;
-            padding: 20px;
-        }
-
-        #product-list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .product {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        button {
-            background: #050047;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .pagination button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            background-color: #050047;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .pagination button.active {
-            font-weight: bold;
-        }
-
-    #cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 100%;
-            background: white;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        #cart-sidebar.visible {
-            transform: translateX(0);
-        }
-
-        #cart-sidebar.hidden {
-            transform: translateX(100%);
-        }
-
-        #cart-items li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-        }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Port+Lligat+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Port+Lligat+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/catalogo.css">
 </head>
 
 <body>
@@ -212,29 +128,37 @@ function getCarritoCount()
         <div class="cart-icon" onclick="toggleCart()">
             <img src="carrito.jpg" alt=""> <span id="cart-count">0</span>
         </div>
-        <form method="GET">
-            <input type="text" name="search" placeholder="Buscar" value="<?php echo htmlspecialchars($search); ?>">
-            <select name="gene">
-                <option value="">Selecciona Género</option>
-                <?php foreach ($generos as $genero): ?>
-                    <option value="<?php echo htmlspecialchars($genero['genero_v']); ?>" <?php echo $gen == $genero['genero_v'] ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($genero['genero_v']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <select name="clas">
-                <option value="">Selecciona Clasificación</option>
-                <?php foreach ($clasi as $clas): ?>
-                    <option value="<?php echo htmlspecialchars($clas['clasif_v']); ?>" <?php echo $clasi == $clas['clasif_v'] ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($clas['clasif_v']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <input type="submit" value="Buscar">
-        </form>
+        <div class="busq">
+            <form method="GET">
+                <input type="text" id="serch" name="search" placeholder="Buscar"
+                    value="<?php echo htmlspecialchars($search); ?>">
+
+                <input type="submit" id="bot" value="🔍"><br>
+
+                <div class="sel">
+                    <select name="gene" id="gen">
+                        <option value="">Género </option>
+                        <?php foreach ($generos as $genero): ?>
+                            <option value="<?php echo htmlspecialchars($genero['genero_v']); ?>" <?php echo $gen == $genero['genero_v'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($genero['genero_v']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <select name="clas" id="clas">
+                        <option value=""> Clasificación</option>
+                        <?php foreach ($clasi as $clas): ?>
+                            <option value="<?php echo htmlspecialchars($clas['clasif_v']); ?>" <?php echo $clasi == $clas['clasif_v'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($clas['clasif_v']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </form>
+        </div>
 
         <a href="cliente.php" style="all: unset;">
-            <h1 style="cursor: pointer; font-family: 'Doto', sans-serif; font-size: xxx-large;" >BLACK-GAMES</h1>
+            <h1 style="cursor: pointer; font-family: 'Doto', sans-serif; font-size: xxx-large;">BLACK-GAMES</h1>
         </a>
     </header>
 
