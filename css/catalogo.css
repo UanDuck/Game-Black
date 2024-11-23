@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 header {
     display: flex;
     justify-content: space-around;
@@ -31,21 +35,34 @@ main {
 #product-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 6vh;
+    margin: 2vh 15vh;
 }
 
 .product {
-    border: 1px solid #ddd;
+    border: 1px solid #565656;
+    border-radius: 18px;
     padding: 10px;
+    text-align: center;
+    color: #fff9ef;
+    background: #232323;
     text-align: center;
 }
 
+.product>img {
+    border-radius: 25%;
+    width: 350px;
+}
+
 button {
-    background: #050047;
+    background: #733b00;
     color: white;
     border: none;
     padding: 10px;
     cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    font: message-box;
 }
 
 .pagination button {
@@ -65,7 +82,7 @@ button {
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
+    width: 50%;
     height: 100%;
     background: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
@@ -76,6 +93,8 @@ button {
 
 #cart-sidebar.visible {
     transform: translateX(0);
+    background: linear-gradient(336deg, #000313, #000a01f0, #130000f2, black);
+    color: #fff9ef;
 }
 
 #cart-sidebar.hidden {
@@ -87,13 +106,16 @@ button {
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
+    transform: translateX(-6%);
 }
 
-.busq{
+.busq {
     width: 30%;
 }
 
-.busq > form > label, select, input{
+.busq>form>label,
+select,
+input {
     margin-top: 1.4vh;
     border: none;
     border-radius: 18px;
@@ -103,30 +125,66 @@ button {
     font-size: 2.5vh;
 }
 
-#serch{
+#serch {
     width: 81%;
     border: none;
     color: whitesmoke;
 }
 
-#bot{
+#bot {
     width: 12%;
     font-size: 15px;
     cursor: pointer;
 }
 
-.sel{
+.sel {
     max-width: 100%;
 }
 
-#gen{
+#gen {
     width: 46%;
     background: #282828;
     color: whitesmoke;
 }
 
-#clas{
+#clas {
     width: 49%;
     background: #282828;
     color: whitesmoke;
+}
+
+html {
+    background: linear-gradient(130deg, #870000, #292929, #3b2e1e, #002f22, #292929, #000e3b);
+}
+
+a {
+    background: none;
+    text-decoration: none;
+}
+
+.tit {
+    background: #141414;
+    border-radius: 18px;
+    padding: 0vh 4vh;
+}
+
+.tit>a {
+    text-decoration: none;
+}
+
+#cart-items>li>span {
+    background: none;
+    text-decoration: none;
+}
+
+#cart-items {
+    max-height: 280px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+}
+
+#vacio {
+    transform: translateX(10%);
+    color: red;
 }
