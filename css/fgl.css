@@ -12,6 +12,8 @@ input {
     outline: none;
     transition: border-color 0.3s;
     left: 12px;
+    background: rgb(31, 31, 31);
+    color: #ccc;
 }
 
 label {
@@ -19,10 +21,10 @@ label {
     top: 53%;
     left: 10px;
     transform: translateY(-50%);
-    background: rgb(230, 230, 230);
+    background: rgb(31, 31, 31);
     border-radius: 4px;
     font-size: 18px;
-    color: #999;
+    color: #ccc;
     transition: all 0.3s;
     padding: 0 5px;
     pointer-events: none;
@@ -30,14 +32,14 @@ label {
 
 input:focus,
 input:not(:placeholder-shown) {
-    border-color: blue;
+    border-color: rgb(88,88,88);
 }
 
 input:focus+label,
 input:not(:placeholder-shown)+label {
     top: 0;
     font-size: 15px;
-    color: blue;
+    color: rgb(201, 201, 201);
     transform: translateY(-50%);
 }
 
@@ -57,4 +59,17 @@ button {
     border: 2px solid rgb(126, 126, 126);
     border-radius: 12px;
     cursor: pointer;
+}
+
+select{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    color: #ccc;
+    background: rgb(31, 31, 31);
+}
+
+#ing-t{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
