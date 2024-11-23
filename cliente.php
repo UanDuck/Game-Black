@@ -126,7 +126,7 @@ function getCarritoCount()
 <body>
     <header>
         <div class="cart-icon" onclick="toggleCart()">
-            <img src="carrito.jpg" alt=""> <span id="cart-count">0</span>
+            <img src="carrito.jpg" alt=""> <span style="text-decoration: none;" id="cart-count">0</span>
         </div>
         <div class="busq">
             <form method="GET">
