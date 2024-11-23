@@ -156,17 +156,19 @@ function getCarritoCount()
                 </div>
             </form>
         </div>
-
-        <a href="cliente.php" style="all: unset;">
-            <h1 style="cursor: pointer; font-family: 'Doto', sans-serif; font-size: xxx-large;">BLACK-GAMES</h1>
-        </a>
+        <div class="tit">
+            <a href="cliente.php" style="text-decoration: none;">
+                <h1 style="cursor: pointer; font-family: 'Doto', sans-serif; font-size: xxx-large;">BLACK-GAMES</h1>
+                <p style="text-decoration: underline; text-align: center; cursor: pointer;">Inicio</p>
+            </a>
+        </div>
     </header>
 
     <main>
         <div id="product-list">
             <?php while ($product = mysqli_fetch_assoc($result)): ?>
                 <div class="product">
-                    <img src="<?php echo htmlspecialchars($product['imagen']); ?>"
+                    <img style="width: 350px" src="<?php echo htmlspecialchars($product['imagen']); ?>"
                         alt="<?php echo htmlspecialchars($product['nom_v']); ?>"
                         style="width: 150px; height: auto; margin-bottom: 10px;">
                     <h3><?php echo htmlspecialchars($product['nom_v']); ?></h3>
@@ -207,7 +209,7 @@ function getCarritoCount()
                 <?php foreach ($_SESSION['carrito'] as $id => $quantity): ?>
                     <?php
                     //detalles del producto
-                    $consulta = "SELECT id_v, nom_v, precio FROM videojuegos WHERE id_v = $id";
+                    $consulta = "SELECT id_v, nom_v, precio,imagen FROM videojuegos WHERE id_v = $id";
                     $result = $conn->query($consulta);
                     $producto = $result->fetch_assoc();
 
@@ -220,9 +222,10 @@ function getCarritoCount()
                     $id_productos[] = $id;
                     ?>
                     <li>
+                        <span><img style="width: 100%;" src="<?php echo $producto['imagen'] ?>"></span>
                         <span><?php echo htmlspecialchars($producto['nom_v']); ?></span>
                         <span>Precio: $<?php echo number_format($producto['precio'], 2); ?></span>
-                        <span>Cantidad: <?php echo $quantity; ?></span>
+                        <!--<span>Cantidad: <?php echo $quantity; ?></span>-->
                         <span>Subtotal: $<?php echo number_format($subtotal, 2); ?></span>
                         <span>IVA: $<?php echo number_format($iva, 2); ?></span>
                         <form method="POST" style="display: inline;">
@@ -232,7 +235,7 @@ function getCarritoCount()
                     </li>
                 <?php endforeach; ?>
             <?php else: ?>
-                <li>Tu carrito está vacío.</li>
+                <li id="vacio">Tu carrito está vacío.</li>
             <?php endif; ?>
         </ul>
         <div>
