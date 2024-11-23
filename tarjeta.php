@@ -81,7 +81,7 @@ mysqli_close($conexion);
                     </div>
                     <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>
-                <form action="registrarT.php" method="post">
+                <form action="registrarT.php" id="ing-t" method="post">
 
                     <div class="form-group">
                         <input type="text" placeholder=" " name="titular" maxlength="50" required>
