@@ -1,0 +1,246 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('fondo1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff9ef; /* Texto en color claro similar a la segunda página */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Asegura que el contenido fluya bajo el header */
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Efecto de oscurecimiento en el fondo */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Oscurecimiento más fuerte */
+    z-index: -1;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, #1e0c27, #3b1f39); /* Tonos oscuros y cálidos */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+    height: 80px; /* Altura fija del header */
+}
+
+.site-title {
+    color: #fff9ef; /* Color de texto suave */
+    margin: 0;
+    font-size: 3rem;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6); /* Efecto de luz suave */
+    transition: font-size 0.3s ease;
+}
+
+.site-title.shrink {
+    font-size: 2rem;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85); /* Fondo más oscuro con opacidad */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.sidebar.visible {
+    transform: translateX(0);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.sidebar-nav a {
+    display: block;
+    color: #fff9ef; /* Color suave de texto */
+    text-decoration: none;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #00b0ff; /* Azul suave */
+}
+
+.sidebar-nav a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 5px;
+    height: 100%;
+    background: #00b0ff; /* Línea de resaltado azul */
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sidebar-nav a:hover::before {
+    opacity: 1;
+}
+
+.sidebar-nav {
+    margin-top: 50px;
+}
+
+.explore-button {
+    background-color: #4d4d4d; /* Fondo oscuro */
+    color: #fff9ef;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.explore-button:hover {
+    background-color: #633e1f; /* Color cálido similar a la segunda página */
+}
+
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #1e0c27; /* Transparente con acento suave */
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1500;
+}
+
+.menu-btn:hover {
+    background-color: rgba(0, 23, 58, 0.5); /* Azul oscuro suave */
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #4f1eff; /* Azul LED suave */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+table {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+th {
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+td {
+    background-color: #333;
+    color: #ddd;
+    font-size: 1em;
+    position: relative;
+}
+
+tr:nth-child(even) td {
+    background-color: #444;
+}
+
+tr:hover td {
+    background-color: #9a1eff;
+    color: #fff;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px 5px #5a1eff;
+}
+
+a {
+    color: #621eff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+a:hover {
+    color: #ffd700; /* Color dorado suave */
+    transform: scale(1.1);
+}
+
+td a {
+    margin: 0 10px;
+}
+
+.btn-editar {
+    color: white;
+    background-color: #2d7f3a;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: #218838;
+}
+
+.btn-eliminar {
+    color: white;
+    background-color: #a71d2a;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #9e1e2f;
+}
+
+
+main {
+    margin-top: 80px; /* Igual a la altura del header */
+    flex: 1; /* Asegura que el contenido ocupe el resto del espacio disponible */
+}

@@ -1,0 +1,250 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+/* Efecto de oscurecimiento en el fondo */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Oscurecimiento */
+    z-index: -1;
+}
+
+
+
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, #0011ff, #001e4b); /* Azul LED */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive; /* Estilo de letra gamer */
+  
+}
+
+.site-title {
+    color: white;
+    margin: 0;
+    font-size: 3rem;
+    font-family: 'Press Start 2P', cursive; /* Estilo de letra gamer */
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6); /* Efecto de luz LED */
+    transition: font-size 0.3s ease;
+}
+
+.site-title.shrink {
+    font-size: 2rem; /* Reduce el tamaño al hacer scroll */
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8); /* Fondo oscuro con opacidad */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.sidebar.visible {
+    transform: translateX(0);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.sidebar-nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #00f0ff; /* Azul LED */
+}
+
+.sidebar-nav a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 5px;
+    height: 100%;
+    background: #00f0ff; /* Línea de resaltado LED */
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sidebar-nav a:hover::before {
+    opacity: 1;
+}
+
+.sidebar-nav {
+    margin-top: 50px;
+}
+
+.explore-button {
+    background-color: #00f0ff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.explore-button:hover {
+    background-color: #0066ff;
+}
+
+/* Botón de menú para abrir el sidebar */
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #00eeff00;
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1500; /* Asegura que esté sobre otros elementos */
+}
+
+.menu-btn:hover {
+    background-color: #00173a8c;
+}
+
+
+
+h1 {
+    font-size: 2.5em;
+    color: #1e90ff;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+table {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+th {
+    background-color: #1e2a33;
+    color: #fff;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+td {
+    background-color: #2e3b4e;
+    color: #ddd;
+    font-size: 1em;
+    position: relative;
+}
+
+tr:nth-child(even) td {
+    background-color: #3a4a5b;
+}
+
+/* Efecto de bordes LED al hacer hover sobre las filas */
+tr:hover td {
+    background-color: #1e90ff;
+    color: #fff;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px 5px #1e90ff;
+}
+
+/* Efecto hover para enlaces */
+a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+a:hover {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+td a {
+    margin: 0 10px;
+}
+
+/* Colores de los botones de acción */
+.btn-editar {
+    color: white;
+    background-color: #28a745;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: #218838;
+}
+
+.btn-eliminar {
+    color: white;
+    background-color: #dc3545;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+}

@@ -1,0 +1,170 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fondo de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Fondo oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
+
+/* Contenedor principal (Formulario centrado) */
+form {
+    margin-top: 300px;
+    background-color: #222;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Título del formulario */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.8), 0 0 10px rgba(0, 255, 255, 0.8);
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Animación de resplandor */
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.8), 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(0, 255, 255, 1), 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 1);
+    }
+}
+
+/* Estilos de los campos de entrada */
+label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: #ddd;
+    text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+input[type="file"],
+select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+/* Efecto al hacer foco en el input */
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus,
+input[type="file"]:focus {
+    border-color: #0a74da;
+    background-color: #444;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+/* Estilo de las etiquetas de los campos */
+input[type="text"]:focus + label,
+input[type="date"]:focus + label,
+input[type="number"]:focus + label,
+textarea:focus + label,
+select:focus + label {
+    color: #0a74da;
+    font-size: 14px;
+    transform: translateY(-10px);
+}
+
+/* Estilo para el área de texto */
+textarea {
+    resize: vertical;
+}
+
+/* Estilo del botón de submit */
+input[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.6);
+}
+
+input[type="submit"]:hover {
+    background-color: #065db2;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 1);
+}
+
+/* Efecto de hover en el botón */
+input[type="submit"]:active {
+    background-color: #014f86;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 1);
+}
+
+/* Estilos del campo de selección (select) */
+select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+/* Estilo para los inputs de tipo file */
+input[type="file"] {
+    padding: 10px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background-color: #555;
+}
+
+/* Ajuste del layout en dispositivos móviles */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+    }
+}
