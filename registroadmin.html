@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Registro Usuarios</title>
+    <link rel="icon" href="logo-modified.png" type="image/png"> 
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    
+    <div class="form-side" style="margin-top: 360px;">
+        <div class="container">
+            <h2>REGISTRAR NUEVO USUARIO</h2>
+        <form action="registroadmin.php" method="post" onsubmit="return validarFormulario()">
+            
+            <div class="input-container">
+                
+                <input type="text" name="nombre" id="nombre" required placeholder=" ">
+                <label for="nombre">NOMBRE:</label>
+
+            </div>
+            <div class="input-container">
+                <input type="text" name="apellidop" id="apellidop" required placeholder=" ">
+                <label>APELLIDO PATERNO:</label>
+            </div>
+            <div class="input-container">
+                <input type="text" name="apellidom" id="apellidom" required placeholder=" ">
+                <label>APELLIDO MATERNO:</label>
+            </div>
+            <div class="input-container">
+                <input type="email" name="email" id="email" required placeholder=" ">
+                <label>EMAIL:</label>
+            </div>
+            <div class="input-container">
+                <input type="password" name="contraseña" id="contraseña" required placeholder=" " minlength="8" maxlength="20">
+                <label>CONTRASEÑA:</label>
+            </div>
+            <div class="input-container">
+                <input type="password" name="confirmar_contraseña" id="confirmar_contraseña" required placeholder=" " minlength="8" maxlength="20">
+                <label>CONFIRMAR CONTRASEÑA:</label>
+            </div>
+            <div class="input-container">
+                <select name="tipo" id="tipo" required>
+                    <option value="" disabled selected>TIPO</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                
+            </div>
+            <div class="input-container">
+                <input type="text" name="telefono" id="telefono" required placeholder=" " maxlength="10" minlength="10">
+                <label>TELEFONO:</label>
+            </div>
+            <input type="submit" value="REGISTRAR">
+        </form>
+    </div>
+    </div>
+
+    <script>
+       
+
+        function validarFormulario() {
+    const email = document.getElementById("email").value;
+    const contraseña = document.getElementById("contraseña").value;
+    const confirmarContraseña = document.getElementById("confirmar_contraseña").value;
+
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!regexEmail.test(email)) {
+        alert("Por favor, ingrese un correo electrónico válido (el ingresado tiene caracteres invalidos o está mal escrito).");
+        return false;
+    }
+
+    if (contraseña !== confirmarContraseña) {
+        alert("Las contraseñas no coinciden. Por favor, inténtelo de nuevo.");
+        return false;
+    }
+
+    return true; 
+}
+
+
+    </script>
+    
+</body>
+</html>

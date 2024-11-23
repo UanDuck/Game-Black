@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Ingresar Productos</title>
+    <link rel="stylesheet" href="css/formulariosprod.css">
+</head>
+<body>
+    <h1>Ingresar Nuevo Videojuego</h1>
+
+    
+    <form enctype="multipart/form-data" action="uploader.php" method="post">
+        <label for="nom_v">Nombre del Videojuego:</label>
+        <input type="text" id="nom_v" name="nom_v" required><br><br>
+
+        <label for="desc_v">Descripción:</label>
+        <textarea id="desc_v" name="desc_v" rows="4" cols="50"></textarea><br><br>
+
+        <label for="fecha_lanz">Fecha de Lanzamiento:</label>
+        <input type="date" id="fecha_lanz" name="fecha_lanz" required><br><br>
+
+        <label for="genero_v">Género:</label>
+<select id="genero_v" name="genero_v">
+    <option value="accion">Acción</option>
+    <option value="aventura">Aventura</option>
+    <option value="rpg">RPG</option>
+    <option value="deporte">Deporte</option>
+    
+</select>
+
+<label for="clasif_v">Clasificación:</label>
+<select id="clasif_v" name="clasif_v">
+    <option value="todo_publico">Todo Público</option>
+    <option value="mayores_12">Mayores de 12</option>
+    <option value="mayores_18">Mayores de 18</option>
+   
+</select>
+        <label for="precio">Precio:</label>
+        <input type="number" step="0.01" id="precio" name="precio"><br><br>
+
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*" required><br><br>
+
+        <input type="submit" value="Subir Producto">
+    </form>
+</body>
+</html>
