@@ -1,6 +1,7 @@
 .paginacion {
-    position: fixed;
+    position: absolute;
     bottom: 3vh;
+
 }
 
 .a:hover,
@@ -18,21 +19,25 @@ span {
     color: white;
     padding: 5px;
     margin: 3px;
-    background: #c5800096;
+    /* background: #c5800096; */
     border-radius: 8px;
     padding: 11px 8px;
     transition: .3s;
     -webkit-box-shadow: 0px 0px 72px -20px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 72px -20px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 72px -20px rgba(0, 0, 0, 0.75);
+    display: grid;
+    place-items: center;
 }
 
 span {
     text-decoration: underline;
     font-weight: 700;
+    background: #eb9800;
 
 }
 
-.EE{
-    display: flex; flex-wrap: wrap; flex-direction: row; align-items: center; justify-content: center; gap: 5vh;
+.pagination > a{
+    background: none;
 }
+
