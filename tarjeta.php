@@ -12,12 +12,12 @@ $id_u = $_SESSION['id_u'];
 function obtenerDatos($conexion, $sql, $parametros = [])
 {
     $stmt = mysqli_prepare($conexion, $sql);
-    
+
     if ($parametros) {
         // Asumiendo que todos los parámetros son de tipo string
         mysqli_stmt_bind_param($stmt, str_repeat('s', count($parametros)), ...$parametros);
     }
-    
+
     mysqli_stmt_execute($stmt);
     $result_cons = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_all($result_cons, MYSQLI_ASSOC);
@@ -39,12 +39,9 @@ mysqli_close($conexion);
     <meta name="robots" content="noindex, follow" />
     <link rel="stylesheet" href="css/notifica.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fgl.css">
+    <link rel="stylesheet" href="css/tarjetas.css">
     <title> Tarjeta | Game Black</title>
-    <style>
-        .add-tarjeta {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -73,10 +70,10 @@ mysqli_close($conexion);
                 <?php endif; ?>
             </ul>
 
-            <button id="add-card-btn" style="margin-top: 20px;">Agregar Otra Tarjeta</button>
+            <button id="add-card-btn">Agregar Otra Tarjeta</button>
 
-            <div class ="add-tarjeta" id="add-tarjeta">
-                <h1>Agrega Tu Tarjeta de Crédito | Débito!</h1>
+            <div class="add-tarjeta" id="add-tarjeta">
+                <h4>Agrega Tu Tarjeta de Crédito | Débito!</h4>
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger"
                         style="color: #c72525;margin-bottom: 11px;font-weight: 550; text-align: center;">
@@ -100,14 +97,12 @@ mysqli_close($conexion);
 
                     <h3 style="display: contents;">Fecha de Vencimiento</h3>
                     <div class="juntos" style=" display: flex; flex-direction: row; gap: 3vh;">
-                        <div class="form-group">
-                            <input type="number" placeholder=" " name="dia" minlength="1" maxlength="2" min="1" max="12"
-                                required>
+                        <div class="form-group" style=" width: 47%;">
+                            <input type="number" placeholder=" " name="dia" minlength="1" maxlength="2" min="1" max="12"  required="">
                             <label for="">Mes </label>
                         </div>
-                        <div class="form-group">
-                            <input type="number" placeholder=" " name="anio" minlength="2" maxlength="2" min="24"
-                                required>
+                        <div class="form-group" style="width: 45%;">
+                            <input type="number" placeholder=" " name="anio" minlength="2" maxlength="2" min="24" max="99" required>
                             <label for="">Año </label>
                         </div>
                     </div>
@@ -129,6 +124,7 @@ mysqli_close($conexion);
             </div>
         </div>
     </div>
+    <script src="js/display-tarjeta.js"></script>
 </body>
 
 </html>
