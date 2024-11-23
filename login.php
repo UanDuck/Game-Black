@@ -10,7 +10,6 @@ function decryptPassword($encryptedPassword) {
     list($encryptedData, $iv) = explode('::', base64_decode($encryptedPassword), 2); 
     return openssl_decrypt($encryptedData, METHOD, SECRET_KEY, 0, $iv); 
 }
-session_start();
 
 $host = 'localhost';
 $dbname = 'gb'; 
