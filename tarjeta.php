@@ -9,17 +9,24 @@ if (!isset($_SESSION['id_u'])) {
 
 $id_u = $_SESSION['id_u'];
 
-function obtenerDatos($conexion, $sql)
+function obtenerDatos($conexion, $sql, $parametros = [])
 {
-    $result_cons = mysqli_query($conexion, $sql);
+    $stmt = mysqli_prepare($conexion, $sql);
+    
+    if ($parametros) {
+        // Asumiendo que todos los parámetros son de tipo string
+        mysqli_stmt_bind_param($stmt, str_repeat('s', count($parametros)), ...$parametros);
+    }
+    
+    mysqli_stmt_execute($stmt);
+    $result_cons = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_all($result_cons, MYSQLI_ASSOC);
 }
 
+$cons_juegos = "SELECT * FROM vc JOIN videojuegos USING (id_v) WHERE id_c IN (SELECT id_c FROM compra WHERE id_u = ?)";
+$videojuegos = obtenerDatos($conexion, $cons_juegos, [$id_u]);
 
-$cons_juegos = " select * from vc join videojuegos using (id_v)  where id_c in (select id_c from compra where id_u = ?) ";
-$videojuegos = obtenerDatos($conexion, $cons_juegos, $id_u);
-
-$tarjetas = obtenerDatos($conexion, "SELECT * FROM tarjeta WHERE id_u = ?", $id_u);
+$tarjetas = obtenerDatos($conexion, "SELECT * FROM tarjeta WHERE id_u = ?", [$id_u]);
 
 mysqli_close($conexion);
 ?>
@@ -45,18 +52,14 @@ mysqli_close($conexion);
         <div class="container">
             <h1>Tu Carrito</h1>
             <ul>
-                <?php if (empty($videojuegos)): //si el carrito esta vacio, decir... ?>
+                <?php if (empty($videojuegos)): ?>
                     <li>No tienes videojuegos en tu carrito.</li>
                 <?php else: ?>
                     <?php foreach ($videojuegos as $videojuego): ?>
-                        <li><?= ($videojuego['nom_v']) ?></li>
-                        <!-- Asegúrate de que 'nom_v' sea el nombre correcto de la columna -->
+                        <li><?= htmlspecialchars($videojuego['nom_v']) ?></li>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </ul>
-
-
-
 
             <h1>Tarjetas Registradas</h1>
             <ul>
@@ -64,23 +67,20 @@ mysqli_close($conexion);
                     <li>No tienes tarjetas registradas.</li>
                 <?php else: ?>
                     <?php foreach ($tarjetas as $tarjeta): ?>
-                        <li><?= ($tarjeta['nom_titular']) ?> - <?= ($tarjeta['tipo_tj']) ?> -
-                            **** **** **** <?= (substr($tarjeta['num_tj'], -4)) ?></li> <!-- substr es una function de php que extrae una parte de una cadena de tetxo -->
+                        <li><?= htmlspecialchars($tarjeta['nom_titular']) ?> - <?= htmlspecialchars($tarjeta['tipo_tj']) ?> -
+                            **** **** **** <?= htmlspecialchars(substr($tarjeta['num_tj'], -4)) ?></li>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </ul>
 
-
-
             <button id="add-card-btn" style="margin-top: 20px;">Agregar Otra Tarjeta</button>
 
-
-            <div class="add-tarjeta" id="add-tarjeta">
+            <div class ="add-tarjeta" id="add-tarjeta">
                 <h1>Agrega Tu Tarjeta de Crédito | Débito!</h1>
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger"
                         style="color: #c72525;margin-bottom: 11px;font-weight: 550; text-align: center;">
-                        <?= $_SESSION['error'] ?>
+                        <?= htmlspecialchars($_SESSION['error']) ?>
                     </div>
                     <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>
