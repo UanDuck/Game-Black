@@ -24,10 +24,25 @@ function obtenerDatos($conexion, $sql, $parametros = [])
 }
 
 $cons_juegos = "SELECT * FROM vc JOIN videojuegos USING (id_v) WHERE id_c IN (SELECT id_c FROM compra WHERE id_u = ?)";
-$videojuegos = obtenerDatos($conexion, $cons_juegos, [$id_u]);
+// $videojuegos = obtenerDatos($conexion, $cons_juegos, [$id_u]);
+
+
+// Código modificado para obtener productos del carrito
+$videojuegos = [];
+if (isset($_SESSION['carrito'])) {
+    foreach ($_SESSION['carrito'] as $id_producto => $cantidad) {
+        // Consulta a la base de datos para obtener detalles de cada videojuego
+        $consulta_producto = "SELECT id_v, nom_v, precio, imagen FROM videojuegos WHERE id_v = ?";
+        $producto = obtenerDatos($conexion, $consulta_producto, [$id_producto]);
+        if ($producto) {
+            // Agregar el producto al array de videojuegos
+            $videojuegos[] = $producto[0]; // El resultado es un array, así que tomamos el primer elemento
+        }
+    }
+}
+
 
 $tarjetas = obtenerDatos($conexion, "SELECT * FROM tarjeta WHERE id_u = ?", [$id_u]);
-
 mysqli_close($conexion);
 ?>
 <!DOCTYPE html>
@@ -58,6 +73,7 @@ mysqli_close($conexion);
                 <?php endif; ?>
             </ul>
 
+            <!-- Tarjetas Registradas -->
             <h1>Tarjetas Registradas</h1>
             <ul>
                 <?php if (empty($tarjetas)): ?>
@@ -71,6 +87,13 @@ mysqli_close($conexion);
             </ul>
 
             <button id="add-card-btn">Agregar Otra Tarjeta</button>
+            <br><br>
+
+            <?php if (!empty($tarjetas)): //mostrar el boton si hay tarjetas registradas ?>
+                <form action="confirmar.php" method="get">
+                    <button type="submit" style="background-color: green;">Confirmar compra</button>
+                </form>
+            <?php else: ?><p>Para confirmar la compra, necesitas registrar una tarjeta.</p><?php endif; ?>
 
             <div class="add-tarjeta" id="add-tarjeta">
                 <h4>Agrega Tu Tarjeta de Crédito | Débito!</h4>
@@ -97,12 +120,15 @@ mysqli_close($conexion);
 
                     <h3 style="display: contents;">Fecha de Vencimiento</h3>
                     <div class="juntos" style=" display: flex; flex-direction: row; gap: 3vh;">
-                        <div class="form-group" style=" width: 47%;">
-                            <input type="number" placeholder=" " name="dia" minlength="1" maxlength="2" min="1" max="12"  required="">
+                        <div class="form-group fech" style=" width: 47%;">
+                            <input type="number" placeholder=" " name="dia" minlength="1" maxlength="2" min="1" max="12"
+                                required="">
                             <label for="">Mes </label>
                         </div>
-                        <div class="form-group" style="width: 45%;">
-                            <input type="number" placeholder=" " name="anio" minlength="2" maxlength="2" min="24" max="99" required>
+                        <h2 style="position: relative; transform: translate(50%, -50%);">/</h2>
+                        <div class="form-group fech" style="width: 45%;">
+                            <input type="number" placeholder=" " name="anio" minlength="2" maxlength="2" min="24"
+                                max="99" required>
                             <label for="">Año </label>
                         </div>
                     </div>

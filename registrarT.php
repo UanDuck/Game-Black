@@ -30,9 +30,9 @@ if (!checkdate($mes, 1, $anio)) {
 }
 
 
-$fechav=($anio.'/'.$mes);
+$fechav=("$anio/$mes");
 
-$sql = "INSERT INTO tarjeta (nom_titular, tipo_tj, fecha_venc, num_tj, cvv, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO tarjeta (nom_titular, tipo_tj, fecha_venc, num_tj, cvv, id_u) VALUES (?, ?, ?, ?, ?, ?)";
 $pre = mysqli_prepare($conexion, $sql);
 if ($pre === false) {
     $_SESSION['error'] = 'Error en la preparación de la consulta.';
@@ -40,7 +40,7 @@ if ($pre === false) {
     exit;
 }
 
-mysqli_stmt_bind_param($pre, "ssssss", $tt, $tipo_tg, $fechav, $num_tg, $cvv, $user_id);
+mysqli_stmt_bind_param($pre, "ssssss", $tt, $tipo_tg, $fechav, $num_tg, $cvv, $idu);
 
 if (!mysqli_stmt_execute($pre)) {
     $_SESSION['error'] = 'Error al registrar la Tarjeta: ' . mysqli_error($conexion);
