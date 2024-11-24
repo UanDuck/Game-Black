@@ -3,7 +3,7 @@ session_start();
 include('php/conec.php');
 
 if (!isset($_SESSION['id_u'])) {
-    header('Location: index.php'); // checamos si el usuario ya ha iniciado sesion
+    header('Location: index.php'); // Checamos si el usuario ya ha iniciado sesión
     exit;
 }
 
@@ -23,10 +23,6 @@ function obtenerDatos($conexion, $sql, $parametros = [])
     return mysqli_fetch_all($result_cons, MYSQLI_ASSOC);
 }
 
-$cons_juegos = "SELECT * FROM vc JOIN videojuegos USING (id_v) WHERE id_c IN (SELECT id_c FROM compra WHERE id_u = ?)";
-// $videojuegos = obtenerDatos($conexion, $cons_juegos, [$id_u]);
-
-
 // Código modificado para obtener productos del carrito
 $videojuegos = [];
 if (isset($_SESSION['carrito'])) {
@@ -40,7 +36,6 @@ if (isset($_SESSION['carrito'])) {
         }
     }
 }
-
 
 $tarjetas = obtenerDatos($conexion, "SELECT * FROM tarjeta WHERE id_u = ?", [$id_u]);
 mysqli_close($conexion);
@@ -56,7 +51,7 @@ mysqli_close($conexion);
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fgl.css">
     <link rel="stylesheet" href="css/tarjetas.css">
-    <title> Tarjeta | Game Black</title>
+    <title>Tarjeta | Game Black</title>
 </head>
 
 <body>
@@ -79,26 +74,34 @@ mysqli_close($conexion);
                 <?php if (empty($tarjetas)): ?>
                     <li>No tienes tarjetas registradas.</li>
                 <?php else: ?>
-                    <?php foreach ($tarjetas as $tarjeta): ?>
-                        <li><?= htmlspecialchars($tarjeta['nom_titular']) ?> - <?= htmlspecialchars($tarjeta['tipo_tj']) ?> -
-                            **** **** **** <?= htmlspecialchars(substr($tarjeta['num_tj'], -4)) ?></li>
-                    <?php endforeach; ?>
+                    <form style="list-style: none;" class="tarj" action="confirmar.php" method="post"
+                        onsubmit="return validarSeleccion();">
+                        <?php foreach ($tarjetas as $tarjeta): ?>
+                            <li>
+                                <div class="form-group">
+                                    <label style="color: white;" for="tarjeta_<?= htmlspecialchars($tarjeta['id_tj']) ?>">
+                                        <?= htmlspecialchars($tarjeta['nom_titular']) ?> |
+                                        <?= htmlspecialchars($tarjeta['tipo_tj']) ?> |
+                                        <?= htmlspecialchars($tarjeta['num_tj']) ?> 
+                                    </label>
+                                    <input style="transform: translateX(-52%);" type="radio" name="tarjeta"
+                                        value="<?= htmlspecialchars($tarjeta['id_tj']) ?>"
+                                        id="tarjeta_<?= htmlspecialchars($tarjeta['id_tj']) ?>" required>
+                                </div>
+                            </li>
+                        <?php endforeach; ?> <br>
+                        <button type="submit" style="background-color: green; color: white;">Confirmar compra</button>
+                    </form>
                 <?php endif; ?>
             </ul>
 
             <button id="add-card-btn">Agregar Otra Tarjeta</button>
             <br><br>
 
-            <?php if (!empty($tarjetas)): //mostrar el boton si hay tarjetas registradas ?>
-                <form action="confirmar.php" method="get">
-                    <button type="submit" style="background-color: green;">Confirmar compra</button>
-                </form>
-            <?php else: ?><p>Para confirmar la compra, necesitas registrar una tarjeta.</p><?php endif; ?>
-
             <div class="add-tarjeta" id="add-tarjeta">
                 <h4>Agrega Tu Tarjeta de Crédito | Débito!</h4>
                 <?php if (isset($_SESSION['error'])): ?>
-                    <div class="alert alert-danger"
+                    <div class=" alert alert-danger"
                         style="color: #c72525;margin-bottom: 11px;font-weight: 550; text-align: center;">
                         <?= htmlspecialchars($_SESSION['error']) ?>
                     </div>
@@ -119,17 +122,17 @@ mysqli_close($conexion);
                     </div>
 
                     <h3 style="display: contents;">Fecha de Vencimiento</h3>
-                    <div class="juntos" style=" display: flex; flex-direction: row; gap: 3vh;">
-                        <div class="form-group fech" style=" width: 47%;">
+                    <div class="juntos" style="display: flex; flex-direction: row; gap: 3vh;">
+                        <div class="form-group fech" style="width: 47%;">
                             <input type="number" placeholder=" " name="dia" minlength="1" maxlength="2" min="1" max="12"
                                 required="">
-                            <label for="">Mes </label>
+                            <label style="top: 35%;" for="">Mes </label>
                         </div>
                         <h2 style="position: relative; transform: translate(50%, -50%);">/</h2>
                         <div class="form-group fech" style="width: 45%;">
                             <input type="number" placeholder=" " name="anio" minlength="2" maxlength="2" min="24"
                                 max="99" required>
-                            <label for="">Año </label>
+                            <label style="top: 35%;" for="">Año </label>
                         </div>
                     </div>
 
@@ -150,6 +153,18 @@ mysqli_close($conexion);
             </div>
         </div>
     </div>
+    <script>
+        function validarSeleccion() {
+            const radios = document.getElementsByName('tarjeta');
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    return true; // Al menos una tarjeta está seleccionada
+                }
+            }
+            alert('Por favor, selecciona una tarjeta antes de continuar.');
+            return false; // Evita el envío del formulario
+        }
+    </script>
     <script src="js/display-tarjeta.js"></script>
 </body>
 

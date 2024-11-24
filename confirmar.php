@@ -27,8 +27,22 @@ if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
 $tarjetas = obtenerDatos($conn, "SELECT * FROM tarjeta WHERE id_u = ?", [$id_u]);
 //checamos sii el usuario tiene tarjetas
 if (empty($tarjetas)) {
-    header('Location: tarjeta.php'); //sino, lo regresamos
+    $_SESSION['error'] = 'Error, no hay tarjetas registradas: ' . mysqli_error($conexion);
+    header('Location: tarjeta.php');
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id_tarjeta = $_POST['tarjeta']; //guardamos el id de la th selec
+    $tarjeta_seleccionada = obtenerDatos($conn, "SELECT * FROM tarjeta WHERE id_tj = ?", [$id_tarjeta]); //obtenemos los datos de esa tj
+    if ($tarjeta_seleccionada) {
+        $tarjeta = $tarjeta_seleccionada[0]; // Tomar el primer resultado
+        $num_tarjeta_usada = htmlspecialchars($tarjeta['num_tj']);
+    } else {
+        $num_tarjeta_usada = 'No disponible';
+    }
+} else {
+    $num_tarjeta_usada = 'No disponible';
 }
 
 
@@ -60,7 +74,6 @@ foreach ($_SESSION['carrito'] as $id_producto => $cantidad) {
         'nombre' => $producto['nom_v'],
         'precio' => $producto['precio'],
         'imagen' => $producto['imagen'],
-        'cantidad' => $cantidad,
         'subtotal' => $subtotal,
         'iva' => $iva
     ];
@@ -103,55 +116,72 @@ unset($_SESSION['carrito']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cc.css">
     <title>Confirmación de Compra</title>
 </head>
 
 <body>
-    <h1>¡Gracias por tu compra!</h1>
-    <p>Tu compra ha sido procesada exitosamente. A continuación, te mostramos los detalles:</p>
+    <div class="full">
+        <div class="container">
 
-    <h2>Detalles de la Compra</h2>
-    <p><strong>ID de la Compra:</strong> <?= htmlspecialchars($id_c) ?></p>
-    <p><strong>Total:</strong> $<?= number_format($total, 2) ?></p>
-    <p><strong>Subtotal:</strong> $<?= number_format($subtotal_total, 2) ?></p>
-    <p><strong>IVA (16%):</strong> $<?= number_format($iva_total, 2) ?></p>
+            <h1>¡Gracias por tu compra!</h1>
+            <p>Tu compra ha sido procesada exitosamente. A continuación, te mostramos los detalles:</p>
 
-    <h3>Productos Comprados:</h3>
-    <ul>
-        <?php foreach ($productos as $producto): ?>
-            <li>
-                <?php
-                $ruta_imagen = htmlspecialchars($producto['imagen']);
-                $imagen = file_exists($ruta_imagen) ? $ruta_imagen : 'error.png';
-                ?>
-                <img src="<?= $imagen ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>"
-                    style="width: 50px; height: 50px;">
-                <strong><?= htmlspecialchars($producto['nombre']) ?></strong> -
-                $<?= number_format($producto['precio'], 2) ?>
-                <p>Cantidad: <?= $producto['cantidad'] ?></p>
-                <p>Subtotal: $<?= number_format($producto['subtotal'], 2) ?></p>
-                <p>IVA: $<?= number_format($producto['iva'], 2) ?></p>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+            <h2>Detalles de la Compra</h2>
+            <p><strong>ID de la Compra:</strong> <?= htmlspecialchars($id_c) ?></p>
+            <p><strong>Total:</strong> $<?= number_format($total, 2) ?></p>
+            <p><strong>Subtotal:</strong> $<?= number_format($subtotal_total, 2) ?></p>
+            <p><strong>IVA (16%):</strong> $<?= number_format($iva_total, 2) ?></p>
+            <hr>
+            <h3>Productos Comprados:</h3>
+            <hr>
+            <ul>
+                <?php foreach ($productos as $producto): ?>
+                    <div class="li-pro">
+                        <li>
+                            <?php
+                            $ruta_imagen = htmlspecialchars($producto['imagen']);
+                            $imagen = file_exists($ruta_imagen) ? $ruta_imagen : 'error.png';
+                            ?>
+                            <div class="head">
+                                <img style="height: 18vh;" src="<?= $imagen ?>"
+                                    alt="<?= htmlspecialchars($producto['nombre']) ?>">
+                                <strong><?= htmlspecialchars($producto['nombre']) ?></strong>
+                            </div>
+                            <p>Precio: $<?= number_format($producto['precio'], 2) ?></p>
+                            <p style="display: none;">Cantidad: <?= $producto['cantidad'] ?></p>
+                            <p>Subtotal: $<?= number_format($producto['subtotal'], 2) ?></p>
+                            <p>IVA: $<?= number_format($producto['iva'], 2) ?></p>
+                        </li>
+                    </div>
+                <?php endforeach; ?>
+            </ul>
+            <hr>
+            <h3>Información del Usuario</h3>
+            <?php
+            //detalles del usuario
+            $sql_usuario = "SELECT nom_u, ap_u, correo_u, telefono FROM usuario WHERE id_u = ?";
+            $stmt_usuario = $conn->prepare($sql_usuario);
+            $stmt_usuario->bind_param("i", $id_u);
+            $stmt_usuario->execute();
+            $result_usuario = $stmt_usuario->get_result();
+            $usuario = $result_usuario->fetch_assoc();
+            ?>
 
-    <h3>Información del Usuario</h3>
-    <?php
-    //detalles del usuario
-    $sql_usuario = "SELECT nom_u, ap_u, correo_u, telefono FROM usuario WHERE id_u = ?";
-    $stmt_usuario = $conn->prepare($sql_usuario);
-    $stmt_usuario->bind_param("i", $id_u);
-    $stmt_usuario->execute();
-    $result_usuario = $stmt_usuario->get_result();
-    $usuario = $result_usuario->fetch_assoc();
-    ?>
-    <p><strong>Nombre:</strong> <?= htmlspecialchars($usuario['nom_u'] . ' ' . $usuario['ap_u']) ?></p>
-    <p><strong>Correo:</strong> <?= htmlspecialchars($usuario['correo_u']) ?></p>
-    <p><strong>Teléfono:</strong> <?= htmlspecialchars($usuario['telefono']) ?></p>
-
-    <p><a href="cliente.php">Volver al inicio</a></p>
-    <button onclick="window.location.href='lic_vid.php'">Descargar Licencias</button>
-    <button type="submit" onclick="generarTicket()">Generar Ticket</button>
+            <p><strong>No. Tarjeta Usada:</strong> **** **** ****
+                <?= htmlspecialchars(substr($num_tarjeta_usada, -4)) ?>
+            </p>
+            <p><strong>Nombre:</strong> <?= htmlspecialchars($usuario['nom_u'] . ' ' . $usuario['ap_u']) ?></p>
+            <p><strong>Correo:</strong> <?= htmlspecialchars($usuario['correo_u']) ?></p>
+            <p><strong>Teléfono:</strong> <?= htmlspecialchars($usuario['telefono']) ?></p>
+            <div class="head">
+                <p class="reg"><a href="cliente.php">Volver al inicio</a></p>
+                <button type="submit" onclick="generarTicket()">Generar Ticket</button>
+                <button onclick="window.location.href='lic_vid.php'">Descargar Licencias</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>

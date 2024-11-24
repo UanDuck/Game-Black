@@ -38,9 +38,6 @@ try {
             $decryptedPassword = decryptPassword($encryptedPassword);
 
             // Verificar si la contraseña ingresada coincide con la desencriptada
-            echo "Contraseña desencriptada: " . $decryptedPassword . "<br>"; // Depuración
-            echo "Contraseña ingresada: " . $contraseñaInput . "<br>"; // Depuración
-
             if ($contraseñaInput === $decryptedPassword) {
                 $_SESSION['id_u'] = $row['id_u'];
                 if ($tipoUsuario == 'admin') {
