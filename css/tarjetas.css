@@ -4,6 +4,15 @@
     width: 99%;
 }
 
-.fech > label{
+.ya .fech>label {
     top: 35%;
 }
+
+ul>li {
+    list-style: none;
+}
+
+.tarj {
+    list-style: none;
+}
+

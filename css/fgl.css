@@ -18,7 +18,7 @@ input {
 
 label {
     position: absolute;
-    top: 53%;
+    top: 50%;
     left: 10px;
     transform: translateY(-50%);
     background: rgb(31, 31, 31);
